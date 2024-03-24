@@ -17,14 +17,17 @@ public class Decoder {
     public String decodeBase64(String encodedText) {
         StringBuilder binaryString = new StringBuilder();
         for (char c : encodedText.toCharArray()) {
-            int decimalValue = getDecimalValue(c);
-            String binary = Integer.toBinaryString(decimalValue);
-            while (binary.length() < 6) {
-                binary = "0" + binary;
+            try {
+                int decimalValue = getDecimalValue(c);
+                String binary = Integer.toBinaryString(decimalValue);
+                while (binary.length() < 6) {
+                    binary = "0" + binary;
+                }
+                binaryString.append(binary);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid Base64 character: " + c );
             }
-            binaryString.append(binary);
         }
-
         System.out.println("=======================================================================");
         System.out.println("Binary Representation for \"" + encodedText + "\":");
         System.out.println(binaryString.toString().trim());
@@ -54,8 +57,10 @@ public class Decoder {
             return base64Char - '0' + 52;
         } else if (base64Char == '+') {
             return 62;
-        } else {
+        } else if (base64Char == '/') {
             return 63;
+        } else {
+            throw new IllegalArgumentException("Invalid Base64 character: " + base64Char);
         }
     }
 }

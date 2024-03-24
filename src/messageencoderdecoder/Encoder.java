@@ -19,11 +19,15 @@ public class Encoder {
 //        convert plain text into 8 bit binary representation as per ASCII Character codes
         StringBuilder binaryString = new StringBuilder();
         for (char c : plainText.toCharArray()) {
-            String binary = Integer.toBinaryString(c);
-            while (binary.length() < 8) {
-                binary = "0" + binary;
+            try {
+                String binary = Integer.toBinaryString(c);
+                while (binary.length() < 8) {
+                    binary = "0" + binary;
+                }
+                binaryString.append(binary);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid character: " + c );
             }
-            binaryString.append(binary);
         }
         System.out.println("=======================================================================");
         System.out.println("Binary Representation for \"" + plainText + "\":");
@@ -42,12 +46,17 @@ public class Encoder {
             while (group.length() < 6) {
                 group += "0";
             }
+            try {
 
-            int decimalValue = Integer.parseInt(group, 2);
-            char base64Char = getBase64Char(decimalValue);
-            encodedString.append(base64Char);
-            index += 6;
-            System.out.print(group.trim() + "\t"); // Trim to remove the trailing space
+                int decimalValue = Integer.parseInt(group, 2);
+                char base64Char = getBase64Char(decimalValue);
+                encodedString.append(base64Char);
+                index += 6;
+                System.out.print(group.trim() + "\t"); // Trim to remove the trailing space
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid binary format: " + group);
+                index += 6;
+            }
         }
         System.out.println("");
         System.out.println("=======================================================================");
