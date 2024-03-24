@@ -25,26 +25,16 @@ public class Decoder {
                 }
                 binaryString.append(binary);
             } catch (IllegalArgumentException e) {
-                System.out.println("Invalid Base64 character: " + c );
+                System.out.println("Invalid character: " + c + ". Skipping...");
             }
         }
-        System.out.println("=======================================================================");
-        System.out.println("Binary Representation for \"" + encodedText + "\":");
-        System.out.println(binaryString.toString().trim());
-        System.out.println("=======================================================================");
-
         StringBuilder decodedString = new StringBuilder();
-        System.out.println("Grouped Binary Representation:");
         for (int i = 0; i < binaryString.length(); i += 8) {
             String group = binaryString.substring(i, Math.min(i + 8, binaryString.length()));
             int decimalValue = Integer.parseInt(group, 2);
             char decodedChar = (char) decimalValue;
             decodedString.append(decodedChar);
-            System.out.print(group.trim() + "\t"); // Trim to remove the trailing space
         }
-        System.out.println("");
-        System.out.println("=======================================================================");
-
         return decodedString.toString();
     }
 

@@ -26,7 +26,7 @@ public class Encoder {
                 }
                 binaryString.append(binary);
             } catch (NumberFormatException e) {
-                System.out.println("Invalid character: " + c );
+                System.out.println("Invalid character: " + c + ". Skipping...");
             }
         }
         System.out.println("=======================================================================");
@@ -54,7 +54,7 @@ public class Encoder {
                 index += 6;
                 System.out.print(group.trim() + "\t"); // Trim to remove the trailing space
             } catch (NumberFormatException e) {
-                System.out.println("Invalid binary format: " + group);
+                System.out.println("Invalid binary format: " + group + ". Skipping...");
                 index += 6;
             }
         }
